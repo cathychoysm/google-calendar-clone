@@ -162,7 +162,9 @@ export default function EditEventForm({
               value={formik.values.startDate}
               onClick={(value: string) => {
                 formik.setFieldValue("startDate", value, true);
-                formik.setFieldValue("endDate", value, true);
+                if (isAfter(new Date(value), new Date(formik.values.endDate))) {
+                  formik.setFieldValue("endDate", value, true);
+                }
               }}
               error={false}
             />
@@ -171,14 +173,23 @@ export default function EditEventForm({
                 value={formik.values.startTime}
                 onClick={(value: string) => {
                   formik.setFieldValue("startTime", value, true);
-                  formik.setFieldValue(
-                    "endTime",
-                    format(
-                      addHours(parse(value, "HH:mm", new Date()), 1),
-                      "HH:mm"
-                    ),
-                    true
-                  );
+                  if (
+                    !isStartTimeBeforeEndTime(
+                      formik.values.startDate,
+                      formik.values.endDate,
+                      value,
+                      formik.values.endTime
+                    )
+                  ) {
+                    formik.setFieldValue(
+                      "endTime",
+                      format(
+                        addHours(parse(value, "HH:mm", new Date()), 1),
+                        "HH:mm"
+                      ),
+                      true
+                    );
+                  }
                 }}
                 error={false}
               />
