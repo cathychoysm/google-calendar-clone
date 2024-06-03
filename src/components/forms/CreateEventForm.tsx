@@ -117,7 +117,9 @@ export default function CreateEventForm({
                     value={values.startDate}
                     onClick={(value: string) => {
                       setFieldValue("startDate", value, true);
-                      setFieldValue("endDate", value, true);
+                      if (isAfter(new Date(value), new Date(values.endDate))) {
+                        setFieldValue("endDate", value, true);
+                      }
                     }}
                     error={false}
                   />
@@ -126,14 +128,23 @@ export default function CreateEventForm({
                       value={values.startTime}
                       onClick={(value: string) => {
                         setFieldValue("startTime", value, true);
-                        setFieldValue(
-                          "endTime",
-                          format(
-                            addHours(parse(value, "HH:mm", new Date()), 1),
-                            "HH:mm"
-                          ),
-                          true
-                        );
+                        if (
+                          !isStartTimeBeforeEndTime(
+                            values.startDate,
+                            values.endDate,
+                            value,
+                            values.endTime
+                          )
+                        ) {
+                          setFieldValue(
+                            "endTime",
+                            format(
+                              addHours(parse(value, "HH:mm", new Date()), 1),
+                              "HH:mm"
+                            ),
+                            true
+                          );
+                        }
                       }}
                       error={false}
                     />

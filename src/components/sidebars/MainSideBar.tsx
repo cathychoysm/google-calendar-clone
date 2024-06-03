@@ -210,7 +210,7 @@ export default function MainSideBar({ calendars }: SideBarProps) {
           open={isOpenSnackBar}
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           onClose={handleClose}
-          autoHideDuration={3000}
+          autoHideDuration={2000}
           message="Updating..."
         />
       </div>
