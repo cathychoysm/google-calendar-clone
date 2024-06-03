@@ -11,7 +11,7 @@ Check out the live demo of this project [here](https://google-calendar-clone-tau
 - **Frontend:** TypeScript, React.js, Tailwind CSS, MUI, HTML, CSS
 - **Backend:** Next.js
 - **Database:** PostgreSQL
-- **Authentication:** Google OAuth
+- **Authentication:** NextAuth.js, Google OAuth
 
 ## App Features
 
