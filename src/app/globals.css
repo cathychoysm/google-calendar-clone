@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 .height-calendar {
+  @media (max-width: 768px) {
+    height: calc(100vh - 48px);
+  }
   height: calc(100vh - 64px);
 }
 
 .width-calendar {
+  @media (max-width: 768px) {
+    width: calc(100vw - 128px);
+  }
   width: calc(100vw - 256px);
 }
 
@@ -26,6 +32,64 @@
   background-repeat: no-repeat;
 }
 
-#search_people::placeholder {
-  padding-left: 35px;
+.w-450 {
+  width: 450px;
+}
+
+.w-816 {
+  width: 816px;
+}
+
+.left-modal {
+  left: 40%;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.modal-transform {
+  animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    margin-left: 10px;
+    opacity: 0.5;
+  }
+  to {
+    margin-left: 0;
+    opacity: 1;
+  }
+}
+
+.hover-shown {
+  opacity: 0;
+}
+
+.hover-item:hover .hover-shown {
+  opacity: 1;
+}
+
+.hover-item:hover .hover-truncate {
+  @media (max-width: 768px) {
+    width: 80px;
+  }
+  width: 150px;
+}
+
+.fa-icon-20 {
+  @media (max-width: 768px) {
+    height: 15px;
+  }
+  height: 20px;
+}
+
+.fa-icon-15 {
+  @media (max-width: 768px) {
+    height: 10px;
+  }
+  height: 15px;
 }

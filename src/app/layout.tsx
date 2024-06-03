@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import SideBar from "@/components/SideBar";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 
@@ -22,13 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} text-slate-500`}>
-        <Header />
-        <main className="flex flex-row">
-          <SideBar />
-          {children}
-        </main>
-      </body>
+      <body className={`${roboto.className} text-slate-600`}>{children}</body>
     </html>
   );
 }

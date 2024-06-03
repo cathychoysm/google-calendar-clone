@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+	previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id						String		@id @default(uuid())
+  name					String
+  email					String		@unique
+  password			String?
+	registerType	String
+  createdAt 		DateTime	@default(now())
+	calendars			Calendar[]
+	events				Event[]
+}
+
+model Calendar {
+	id						String		@id @default(uuid())
+	name 					String
+	defaultColor 	String
+	show					Boolean		@default(true)
+	userId 				String
+	user 					User 			@relation(fields: [userId], references: [id])
+	createdAt			DateTime	@default(now())
+	events				Event[]
+}
+
+model Event {
+	id						String		@id @default(uuid())
+	title					String
+	startAt				DateTime	@db.Timestamp
+	endAt					DateTime	@db.Timestamp
+	isAllDay			Boolean
+	description		String?
+	color					String
+	userId				String
+	user					User			@relation(fields: [userId], references: [id])
+	calendarId		String
+	calendar			Calendar	@relation(fields: [calendarId], references: [id])
+	createdAt			DateTime	@default(now())
+}
