@@ -6,9 +6,8 @@ import { DateTimePickerProps } from "./DatePicker";
 import { TextField } from "@mui/material";
 
 export default function TimePicker({
-  field,
   value,
-  setFieldValue,
+  onClick,
   error,
 }: DateTimePickerProps) {
   const times = useMemo(() => {
@@ -86,7 +85,7 @@ export default function TimePicker({
                 key={time}
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => {
-                  setFieldValue(field, time, true);
+                  onClick(time);
                   setIsListOpen(false);
                 }}
                 className="p-3 text-sm"

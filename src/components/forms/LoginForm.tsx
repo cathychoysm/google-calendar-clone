@@ -73,6 +73,7 @@ export default function LoginForm() {
             <TextField
               type="text"
               name="email"
+              autoComplete="off"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={Boolean(formik.errors.email) && formik.touched.email}
@@ -90,6 +91,7 @@ export default function LoginForm() {
             <TextField
               type="password"
               name="password"
+              autoComplete="off"
               value={formik.values.password}
               onChange={formik.handleChange}
               error={Boolean(formik.errors.password) && formik.touched.password}

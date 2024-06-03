@@ -2,28 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { FormikErrors } from "formik";
-
 import MiniCalendar from "../MiniCalendar";
 import { TextField } from "@mui/material";
 
 import { ISODateToDisplayDate } from "@/lib/functions";
 
 export type DateTimePickerProps = {
-  field: string;
   value: string;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => Promise<void | FormikErrors<CreateEventFormFormikValues>>;
+  onClick: (value: any) => void;
   error?: boolean;
 };
 
 export default function DatePicker({
-  field,
   value,
-  setFieldValue,
+  onClick,
   error,
 }: DateTimePickerProps) {
   const thisYear = new Date().getFullYear();
@@ -87,7 +79,7 @@ export default function DatePicker({
         >
           <MiniCalendar
             onClickDate={(date: string) => {
-              setFieldValue(field, date, true);
+              onClick(date);
               setIsOpenCalendar(false);
             }}
           />

@@ -5,11 +5,17 @@ import "./globals.css";
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
-  title: "Google Calendar",
+  title: "Google Calendar (Clone)",
   description:
-    "Learn how Google Calendar helps you stay on top of your plans - at home, at work and everywhere in between.",
+    "Learn how Google Calendar (Clone) helps you stay on top of your plans - at home, at work and everywhere in between.",
   icons: {
     icon: "/icon.png",
+  },
+  openGraph: {
+    title: "Google Calendar (Clone)",
+    description:
+      "Learn how Google Calendar (Clone) helps you stay on top of your plans - at home, at work and everywhere in between.",
+    images: "/preview.png",
   },
 };
 

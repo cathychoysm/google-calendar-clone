@@ -7,7 +7,7 @@ import { EventModalContextProvider } from "@/contexts/EventModalContext";
 import useCreateEventModalContext from "@/contexts/CreateEventModalContext";
 import useSnackBarContext from "@/contexts/SnackBarContext";
 
-import { add, format } from "date-fns";
+import { add, format, startOfHour } from "date-fns";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
@@ -38,9 +38,9 @@ export default function MainBody({
             title: "",
             isAllDay: true,
             startDate: "",
-            startTime: format(add(now, { hours: 1 }), "HH:ss"),
+            startTime: format(startOfHour(add(now, { hours: 1 })), "HH:ss"),
             endDate: "",
-            endTime: format(add(now, { hours: 2 }), "HH:ss"),
+            endTime: format(startOfHour(add(now, { hours: 2 })), "HH:ss"),
             description: "",
             calendarId: calendars[0].id,
             color: calendars[0].defaultColor,

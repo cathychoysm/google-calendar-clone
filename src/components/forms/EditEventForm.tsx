@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Montserrat } from "next/font/google";
 
-import { isAfter } from "date-fns";
+import { addHours, format, isAfter, parse } from "date-fns";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -159,16 +159,27 @@ export default function EditEventForm({
         <div className="ml-10 flex flex-row items-center gap-3">
           <div className="flex flex-col gap-3">
             <DatePicker
-              field="startDate"
               value={formik.values.startDate}
-              setFieldValue={formik.setFieldValue}
+              onClick={(value: string) => {
+                formik.setFieldValue("startDate", value, true);
+                formik.setFieldValue("endDate", value, true);
+              }}
               error={false}
             />
             {!formik.values.isAllDay && (
               <TimePicker
-                field="startTime"
                 value={formik.values.startTime}
-                setFieldValue={formik.setFieldValue}
+                onClick={(value: string) => {
+                  formik.setFieldValue("startTime", value, true);
+                  formik.setFieldValue(
+                    "endTime",
+                    format(
+                      addHours(parse(value, "HH:mm", new Date()), 1),
+                      "HH:mm"
+                    ),
+                    true
+                  );
+                }}
                 error={false}
               />
             )}
@@ -176,9 +187,10 @@ export default function EditEventForm({
           <div>&#8212;</div>
           <div className="flex flex-col gap-3">
             <DatePicker
-              field="endDate"
               value={formik.values.endDate}
-              setFieldValue={formik.setFieldValue}
+              onClick={(value: string) =>
+                formik.setFieldValue("endDate", value, true)
+              }
               error={isAfter(
                 new Date(formik.values.startDate),
                 new Date(formik.values.endDate)
@@ -186,9 +198,10 @@ export default function EditEventForm({
             />
             {!formik.values.isAllDay && (
               <TimePicker
-                field="endTime"
                 value={formik.values.endTime}
-                setFieldValue={formik.setFieldValue}
+                onClick={(value: string) =>
+                  formik.setFieldValue("endTime", value, true)
+                }
                 error={
                   !isStartTimeBeforeEndTime(
                     formik.values.startDate,
@@ -217,9 +230,11 @@ export default function EditEventForm({
         <div className="ml-1.5 flex flex-row items-center gap-3">
           <Image src={CalendarIcon} alt="" width={20} height={20} />
           <CalendarPicker
-            field="calendarId"
             value={formik.values.calendarId}
-            setFieldValue={formik.setFieldValue}
+            onClick={(value: Calendar) => {
+              formik.setFieldValue("calendarId", value.id, true);
+              formik.setFieldValue("color", value.defaultColor, true);
+            }}
             calendars={calendars}
           />
           <ColorPicker

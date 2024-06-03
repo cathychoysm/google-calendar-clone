@@ -12,9 +12,8 @@ interface CalendarPickerProps extends DateTimePickerProps {
 }
 
 export default function CalendarPicker({
-  field,
   value,
-  setFieldValue,
+  onClick,
   calendars,
 }: CalendarPickerProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
@@ -63,9 +62,8 @@ export default function CalendarPicker({
               <div
                 key={calendar.id}
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => {
-                  setFieldValue(field, calendar.id, true);
-                  setFieldValue("color", calendar.defaultColor, true);
+                onClick={(calendar) => {
+                  onClick(calendar);
                   setIsListOpen(false);
                 }}
                 className="p-3 text-sm w-44 truncate"

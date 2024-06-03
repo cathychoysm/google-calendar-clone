@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import useCreateEventModalContext from "../../contexts/CreateEventModalContext";
 
 import Draggable from "react-draggable";
-import { isAfter } from "date-fns";
+import { addHours, format, isAfter, parse } from "date-fns";
 import { useFormikContext } from "formik";
 
 import { Montserrat } from "next/font/google";
@@ -114,16 +114,27 @@ export default function CreateEventForm({
                 />
                 <div className="flex flex-col gap-3">
                   <DatePicker
-                    field="startDate"
                     value={values.startDate}
-                    setFieldValue={setFieldValue}
+                    onClick={(value: string) => {
+                      setFieldValue("startDate", value, true);
+                      setFieldValue("endDate", value, true);
+                    }}
                     error={false}
                   />
                   {!values.isAllDay && (
                     <TimePicker
-                      field="startTime"
                       value={values.startTime}
-                      setFieldValue={setFieldValue}
+                      onClick={(value: string) => {
+                        setFieldValue("startTime", value, true);
+                        setFieldValue(
+                          "endTime",
+                          format(
+                            addHours(parse(value, "HH:mm", new Date()), 1),
+                            "HH:mm"
+                          ),
+                          true
+                        );
+                      }}
                       error={false}
                     />
                   )}
@@ -131,9 +142,10 @@ export default function CreateEventForm({
                 <div>&#8212;</div>
                 <div className="flex flex-col gap-3">
                   <DatePicker
-                    field="endDate"
                     value={values.endDate}
-                    setFieldValue={setFieldValue}
+                    onClick={(value: string) =>
+                      setFieldValue("endDate", value, true)
+                    }
                     error={isAfter(
                       new Date(values.startDate),
                       new Date(values.endDate)
@@ -141,9 +153,10 @@ export default function CreateEventForm({
                   />
                   {!values.isAllDay && (
                     <TimePicker
-                      field="endTime"
                       value={values.endTime}
-                      setFieldValue={setFieldValue}
+                      onClick={(value: string) =>
+                        setFieldValue("endTime", value, true)
+                      }
                       error={
                         !isStartTimeBeforeEndTime(
                           values.startDate,
@@ -172,9 +185,11 @@ export default function CreateEventForm({
               <div className="ml-1.5 flex flex-row items-center gap-3 w-full">
                 <Image src={CalendarIcon} alt="" width={20} height={20} />
                 <CalendarPicker
-                  field="calendarId"
                   value={values.calendarId}
-                  setFieldValue={setFieldValue}
+                  onClick={(value: Calendar) => {
+                    setFieldValue("calendarId", value.id, true);
+                    setFieldValue("color", value.defaultColor, true);
+                  }}
                   calendars={calendars}
                 />
                 <ColorPicker
